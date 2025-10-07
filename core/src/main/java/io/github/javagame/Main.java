@@ -2,20 +2,24 @@ package io.github.javagame;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture image;
+    private Texture fishingRod;
 
     @Override
     public void create() {
         batch = new SpriteBatch();
         image = new Texture("fishfishfishfish.jpeg");
+        fishingRod = new Texture("fishingrod.png");
     }
 
     @Override
@@ -23,6 +27,7 @@ public class Main extends ApplicationAdapter {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
         batch.draw(image, 0, 0);
+        batch.draw(fishingRod,0,0);
         batch.end();
     }
 
@@ -30,5 +35,12 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         batch.dispose();
         image.dispose();
+    }
+
+    private void input () {
+
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            System.out.println("SPACE");
+        }
     }
 }
