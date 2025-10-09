@@ -11,7 +11,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(final FishinGame game) {
         this.game = game;
-        gameBg = new Texture("gishfame.jpeg");
+        gameBg = new Texture("kiddiepool.jpg");
     }
 
     @Override
