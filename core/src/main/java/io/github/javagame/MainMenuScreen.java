@@ -23,7 +23,7 @@ public class MainMenuScreen implements Screen {
         game.viewport.apply();
 
         game.batch.begin();
-        game.batch.draw(menuBG, 0, 0);
+        game.batch.draw(menuBG, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.end();
 
         // pressing space will switch to the game screen

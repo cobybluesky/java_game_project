@@ -20,8 +20,8 @@ public class FishinGame extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        // one "meter" will be 16 pixels (window size 640 x 480)
-        viewport = new FitViewport(40,30);
+        // one "meter" will be 32 pixels (window size 960 x 640)
+        viewport = new FitViewport(30,20);
         image = new Texture("fishfishfishfish.jpeg");
         fishingRod = new Texture("fishingrod.png");
 

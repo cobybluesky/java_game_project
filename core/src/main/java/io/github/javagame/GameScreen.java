@@ -1,5 +1,6 @@
 package io.github.javagame;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +22,7 @@ public class GameScreen implements Screen {
         game.viewport.apply();
 
         game.batch.begin();
-        game.batch.draw(gameBg, 0, 0);
+        game.batch.draw(gameBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         game.batch.end();
     }
 
