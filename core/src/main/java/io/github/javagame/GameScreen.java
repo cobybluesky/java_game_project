@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Gdx;
 
 public class GameScreen implements Screen {
     final FishinGame game;
@@ -21,9 +22,15 @@ public class GameScreen implements Screen {
         game.viewport.apply();
 
         game.batch.begin();
-        game.batch.draw(gameBg, 0, 0);
+        game.batch.draw(gameBg, 0, 0,Gdx.graphics.getHeight(),Gdx.graphics.getWidth());
         game.batch.end();
+        //System.out.println(gdx.graphics.getHeight());
+        //System.out.println(gdx.graphics.getWidth());
+        
+        
     }
+
+
 
     @Override
     public void resize(int width, int height) {
