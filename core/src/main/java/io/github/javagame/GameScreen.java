@@ -32,12 +32,12 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
         game.batch.draw(gameBg, 0, 0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
-        game.batch.draw(fisher,10,10,(game.viewport.getWorldWidth()/6),(game.viewport.getWorldHeight()/6));
+        game.batch.draw(fisher,10,10,4,4);
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
 
-        
+
     }
 
 

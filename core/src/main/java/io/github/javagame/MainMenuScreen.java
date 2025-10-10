@@ -21,9 +21,10 @@ public class MainMenuScreen implements Screen {
         ScreenUtils.clear(Color.BLACK);
 
         game.viewport.apply();
+        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
         game.batch.begin();
-        game.batch.draw(menuBG, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        game.batch.draw(menuBG, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
         game.batch.end();
 
         // pressing space will switch to the game screen
