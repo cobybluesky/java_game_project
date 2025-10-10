@@ -20,14 +20,17 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
 
+
+
         game.viewport.apply();
 
+        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
-        game.batch.draw(gameBg, 0, 0);
+        game.batch.draw(gameBg, 0, 0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
+        //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
+        //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
-        //System.out.println(gdx.graphics.getHeight());
-        //System.out.println(gdx.graphics.getWidth());
-        
+
         
     }
 

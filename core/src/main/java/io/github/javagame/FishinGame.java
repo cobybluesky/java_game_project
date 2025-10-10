@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,12 +17,14 @@ public class FishinGame extends Game {
     public FitViewport viewport;
     private Texture image;
     private Texture fishingRod;
+    private OrthographicCamera camera;
 
     @Override
     public void create() {
+        camera = new OrthographicCamera();
         batch = new SpriteBatch();
         // one "meter" will be 32 pixels (window size 960 x 640)
-        viewport = new FitViewport(30,20);
+        viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size 
         image = new Texture("fishfishfishfish.jpeg");
         fishingRod = new Texture("fishingrod.png");
 
@@ -40,7 +43,7 @@ public class FishinGame extends Game {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height) { //automatically calls this method when screen is resized
         viewport.update(width, height, true); // true centers the camera
     }
 
