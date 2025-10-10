@@ -1,6 +1,7 @@
 package io.github.javagame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,6 +15,8 @@ public class GameScreen implements Screen {
     final FishinGame game;
     private Texture gameBg;
     private Texture fisher;
+    double fishDelay = -100;
+    boolean isCast = false;
 
     public GameScreen(final FishinGame game) {
         this.game = game;
@@ -24,9 +27,6 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
-
-
-
         game.viewport.apply();
 
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
@@ -37,7 +37,22 @@ public class GameScreen implements Screen {
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
 
-
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !isCast) {
+            System.out.println("Fish time");
+            // start timer
+            fishDelay = 2 + (Math.random() * 4);// delay will be between 2 and 6 seconds
+            isCast = true;
+            System.out.println(fishDelay);
+        }
+        if (fishDelay > 0) {
+            fishDelay -= delta;// delta - time between frames in seconds
+        }
+        if (fishDelay <= 0 && isCast) {
+            System.out.println("fish caught");
+            fishDelay = -1;
+            isCast = false;
+            // get some fish
+        }
     }
 
 
