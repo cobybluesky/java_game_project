@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 
 public class MainMenuScreen implements Screen {
     final FishinGame game;
@@ -18,7 +19,11 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.BLACK);
+        ScreenUtils.clear(Color.WHITE);
+        //Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        //Gdx.gl.glClearColor(1f,1f,1f,1f);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
