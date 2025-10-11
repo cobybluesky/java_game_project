@@ -26,7 +26,7 @@ public class FishinGame extends Game {
         // one "meter" will be 32 pixels (window size 960 x 640)
         viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size 
         image = new Texture("fishfishfishfish.jpeg");
-        fishingRod = new Texture("fishingrod.png");
+        //fishingRod = new Texture("fishingrod.png");
 
         this.setScreen(new MainMenuScreen(this));
     }
