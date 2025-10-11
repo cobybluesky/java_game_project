@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
     private ArrayList<String> fishInventory;
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
     //the fish and their chances of being caught. For now we should just stick with an equally random chance.
-
+    // alternatively we could let the fish be objects which define their name/type and chance of being caught
     double fishDelay = -100;
     boolean isCast = false;
     boolean fishHooked = false;
@@ -72,20 +72,21 @@ public class GameScreen implements Screen {
             fishDelay = -1;
             isCast = false;
             fishHooked = true;
+            timeFrame = 1.8;
             // get some fish
         }
 
-        //detects if person clicks fast enough 
+        //detects if person clicks fast enough
 
-        if (fishHooked == true) {
+        if (fishHooked) {
             //System.out.println("this is running");
             timeFrame -= delta; //copying what caleb pulled earlier lol
             game.batch.draw(exclamationPoint,16,9,5,5);
 
-            if (timeFrame >= 0 && Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
+            if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
             {
                 System.out.println("Successful reel in");
-                
+                fishHooked = false;
             }
 
             else if (timeFrame < 0) {

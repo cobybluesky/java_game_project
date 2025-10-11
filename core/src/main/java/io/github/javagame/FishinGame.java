@@ -17,14 +17,14 @@ public class FishinGame extends Game {
     public FitViewport viewport;
     private Texture image;
     private Texture fishingRod;
-    private OrthographicCamera camera;
+    private OrthographicCamera camera;// what is this for?
 
     @Override
     public void create() {
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
         // one "meter" will be 32 pixels (window size 960 x 640)
-        viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size 
+        viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size
         image = new Texture("fishfishfishfish.jpeg");
         //fishingRod = new Texture("fishingrod.png");
 
@@ -47,14 +47,4 @@ public class FishinGame extends Game {
         viewport.update(width, height, true); // true centers the camera
     }
 
-    private void input () {
-
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            System.out.println("SPACE");
-        }
-        //if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-
-
-        
-    }
 }
