@@ -29,6 +29,7 @@ public class GameScreen implements Screen {
     boolean isCast = false;
     boolean fishHooked = false;
     double timeFrame = 1.8;
+    boolean fishingDisabled = false;
 
     public GameScreen(final FishinGame game) {
         this.game = game;
@@ -53,16 +54,20 @@ public class GameScreen implements Screen {
             game.batch.draw(fishtext,0,15,15,3);
         }
 
+        game.arrowHandler.drawArrows();
+        game.arrowHandler.moveArrows(delta);
+
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !isCast) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
             System.out.println("Fish time");
             // start timer
             fishDelay = 2 + (Math.random() * 4);// delay will be between 2 and 6 seconds
             isCast = true;
             instructionsVisible = false;
             System.out.println(fishDelay);
+            fishingDisabled = true;
         }
         if (fishDelay > 0) {
             fishDelay -= delta;// delta - time between frames in seconds
@@ -87,11 +92,15 @@ public class GameScreen implements Screen {
             {
                 System.out.println("Successful reel in");
                 fishHooked = false;
+                // 4 testing
+                game.arrowHandler.createArrow();
+                game.arrowHandler.createArrow();
             }
 
             else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
+                fishingDisabled = false;
             }
 
         }

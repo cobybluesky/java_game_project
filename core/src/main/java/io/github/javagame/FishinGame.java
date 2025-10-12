@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class FishinGame extends Game {
     public SpriteBatch batch;
     public FitViewport viewport;
+    public ArrowHandler arrowHandler;
     private Texture image;
     private Texture fishingRod;
     private OrthographicCamera camera;// what is this for?
@@ -23,6 +24,7 @@ public class FishinGame extends Game {
     public void create() {
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
+        arrowHandler = new ArrowHandler(this);
         // one "meter" will be 32 pixels (window size 960 x 640)
         viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size
         image = new Texture("fishfishfishfish.jpeg");
