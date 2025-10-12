@@ -93,8 +93,11 @@ public class GameScreen implements Screen {
                 System.out.println("Successful reel in");
                 fishHooked = false;
                 // 4 testing
-                game.arrowHandler.createArrow();
-                game.arrowHandler.createArrow();
+                game.arrowHandler.createArrow(0);
+                game.arrowHandler.createArrow(1);
+                game.arrowHandler.createArrow(2);
+                game.arrowHandler.createArrow(3);
+                fishingDisabled = false;// this will need to be moved/changed eventually
             }
 
             else if (timeFrame < 0) {
