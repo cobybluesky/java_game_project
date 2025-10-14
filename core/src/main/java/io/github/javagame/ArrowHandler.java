@@ -9,10 +9,10 @@ import java.util.Random;
 public class ArrowHandler {
     private final FishinGame game;
     private Sprite[] arrowDirections = {
-        new Sprite(new Texture("colour_left.png")),
-        new Sprite(new Texture("c_up.png")),
-        new Sprite(new Texture("c_down.png")),
-        new Sprite(new Texture("colour_right.png"))
+        new Sprite(new Texture("arrows/colour_left.png")),
+        new Sprite(new Texture("arrows/c_up.png")),
+        new Sprite(new Texture("arrows/c_down.png")),
+        new Sprite(new Texture("arrows/colour_right.png"))
     };
     private float[] arrowColumns = {7, 10, 13, 16};
     private float arrowSpeed;
@@ -76,6 +76,7 @@ public class ArrowHandler {
         if (rowCount >= sequenceRows) {
             // end sequence
             spawnArrows = false;
+            // add scoring eventually (if you miss too many, lose the fish etc)
         }
     }
 
