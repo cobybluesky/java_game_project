@@ -21,10 +21,16 @@ public class GameScreen implements Screen {
     private boolean instructionsVisible;
 
     private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
-    public ArrayList<String> fishInventory;
+    public ArrayList<Fish> fishInventory;
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
     //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
 
+    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"assets\\fish\\walnut.png");
+    
+    
+    
+    
+    
     double fishDelay = -100;
     boolean isCast = false;
     boolean fishHooked = false;
@@ -92,6 +98,12 @@ public class GameScreen implements Screen {
                 // 4 testing
                 game.arrowHandler.beginArrowSequence(3.0f, 1.0f, 10);
                 fishingDisabled = false;// this will need to be moved/changed eventually
+
+                //Just adding the fish regardless atm until we can tell if they succeed or fail
+                
+                fishInventory.add(walnut);
+
+    
             }
 
             else if (timeFrame < 0) {

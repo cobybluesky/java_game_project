@@ -25,6 +25,9 @@ public class InventoryScreen implements Screen {
 
 
 
+    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"assets\\fish\\walnut.png");
+    Fish narwhal = new Fish("Narwhal",2f,2f,5f,80.2f,4f,"assets\\fish\\narwhal.png");
+
     @Override
     public void resize(int width, int height) {
         game.viewport.update(width, height, true);
@@ -36,7 +39,7 @@ public class InventoryScreen implements Screen {
         ScreenUtils.clear(Color.WHITE);
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-        Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,"assets\\fish\\walnut.png");
+
         game.batch.begin();
         game.batch.draw(walnut.getTexture(),0,0,10,10);
         game.batch.end();
