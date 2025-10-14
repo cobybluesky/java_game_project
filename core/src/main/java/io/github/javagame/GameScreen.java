@@ -17,6 +17,7 @@ public class GameScreen implements Screen {
     private Texture fisher;
     private Texture fishtext;
     private Texture exclamationPoint;
+    private boolean fishingDisabled;
     private boolean instructionsVisible;
 
     private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};

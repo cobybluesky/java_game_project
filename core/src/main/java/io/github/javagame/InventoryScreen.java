@@ -16,10 +16,7 @@ public class InventoryScreen implements Screen {
     
     final FishinGame game;
     
-    String type;
-    double rarity;
-    double length;
-    Texture sprite; 
+ 
 
     public InventoryScreen(final FishinGame game) {
         this.game = game;
@@ -27,13 +24,6 @@ public class InventoryScreen implements Screen {
     }
 
 
-
-    public void Fish(String initType, double initRarity, double initLength,Texture initSprite) {
-        type = initType;
-        rarity = initRarity;
-        length = initLength;
-
-    }
 
     @Override
     public void resize(int width, int height) {
@@ -45,8 +35,9 @@ public class InventoryScreen implements Screen {
 
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-
+        Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,"walnut.png");
         game.batch.begin();
+        game.batch.draw(walnut.getTexture(),0,0,2,2);
 
         
 
