@@ -16,6 +16,10 @@ public class InventoryScreen implements Screen {
     
     final FishinGame game;
     
+    String type;
+    double rarity;
+    double length;
+    Texture sprite; 
 
     public InventoryScreen(final FishinGame game) {
         this.game = game;
@@ -24,8 +28,12 @@ public class InventoryScreen implements Screen {
 
 
 
+    public void Fish(String initType, double initRarity, double initLength,Texture initSprite) {
+        type = initType;
+        rarity = initRarity;
+        length = initLength;
 
-
+    }
 
     @Override
     public void resize(int width, int height) {
