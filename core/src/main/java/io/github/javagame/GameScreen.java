@@ -21,15 +21,14 @@ public class GameScreen implements Screen {
     private boolean instructionsVisible;
 
     private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
-    private ArrayList<String> fishInventory;
+    public ArrayList<String> fishInventory;
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
-    //the fish and their chances of being caught. For now we should just stick with an equally random chance.
-    // alternatively we could let the fish be objects which define their name/type and chance of being caught
+    //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
+
     double fishDelay = -100;
     boolean isCast = false;
     boolean fishHooked = false;
     double timeFrame = 1.8;
-    boolean fishingDisabled = false;
 
     public GameScreen(final FishinGame game) {
         this.game = game;
@@ -54,20 +53,16 @@ public class GameScreen implements Screen {
             game.batch.draw(fishtext,0,15,15,3);
         }
 
-        game.arrowHandler.drawArrows();
-        game.arrowHandler.moveArrows(delta);
-
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !isCast) {
             System.out.println("Fish time");
             // start timer
             fishDelay = 2 + (Math.random() * 4);// delay will be between 2 and 6 seconds
             isCast = true;
             instructionsVisible = false;
             System.out.println(fishDelay);
-            fishingDisabled = true;
         }
         if (fishDelay > 0) {
             fishDelay -= delta;// delta - time between frames in seconds
@@ -77,33 +72,25 @@ public class GameScreen implements Screen {
             fishDelay = -1;
             isCast = false;
             fishHooked = true;
-            timeFrame = 1.8;
             // get some fish
         }
 
-        //detects if person clicks fast enough
+        //detects if person clicks fast enough 
 
-        if (fishHooked) {
+        if (fishHooked == true) {
             //System.out.println("this is running");
             timeFrame -= delta; //copying what caleb pulled earlier lol
             game.batch.draw(exclamationPoint,16,9,5,5);
 
-            if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
+            if (timeFrame >= 0 && Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
             {
                 System.out.println("Successful reel in");
-                fishHooked = false;
-                // 4 testing
-                game.arrowHandler.createArrow(0);
-                game.arrowHandler.createArrow(1);
-                game.arrowHandler.createArrow(2);
-                game.arrowHandler.createArrow(3);
-                fishingDisabled = false;// this will need to be moved/changed eventually
+                
             }
 
             else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
-                fishingDisabled = false;
             }
 
         }
