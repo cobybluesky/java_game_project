@@ -6,8 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+
 import java.util.ArrayList;
 
 //https://alohaeee.itch.io/fishing-assets for the fishin lady
@@ -53,6 +52,9 @@ public class GameScreen implements Screen {
             game.batch.draw(fishtext,0,15,15,3);
         }
 
+        game.arrowHandler.drawArrows();
+        game.arrowHandler.updateArrows(delta);
+
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
@@ -85,7 +87,10 @@ public class GameScreen implements Screen {
             if (timeFrame >= 0 && Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
             {
                 System.out.println("Successful reel in");
-                
+                fishHooked = false;
+                // 4 testing
+                game.arrowHandler.beginArrowSequence(3.0f, 1.0f, 10);
+                fishingDisabled = false;// this will need to be moved/changed eventually
             }
 
             else if (timeFrame < 0) {
