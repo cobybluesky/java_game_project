@@ -33,11 +33,13 @@ public class InventoryScreen implements Screen {
     @Override
     public void render(float delta) {
 
+        ScreenUtils.clear(Color.WHITE);
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-        Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,"walnut.png");
+        Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,"assets\\fish\\walnut.png");
         game.batch.begin();
-        game.batch.draw(walnut.getTexture(),0,0,2,2);
+        game.batch.draw(walnut.getTexture(),0,0,10,10);
+        game.batch.end();
 
         
     }

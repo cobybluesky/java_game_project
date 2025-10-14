@@ -99,9 +99,18 @@ public class GameScreen implements Screen {
                 fishHooked = false;
             }
 
+        
+
         }
 
+
         game.batch.end();
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {    //temporary access to inventory. We'll hopefully change it to button later
+            game.setScreen(new InventoryScreen(game));
+            dispose();
+        }
 
 
     }
