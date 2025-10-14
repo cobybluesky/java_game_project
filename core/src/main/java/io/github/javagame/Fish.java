@@ -30,5 +30,25 @@ public class Fish {
         return texture;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+    
+    public float getDelay() {
+        return delay;
+    }
+    public float getSequences() {
+
+        return sequences;
+    }
+
+    public float getLength() {
+        return length;
+    }
+
 
 }   

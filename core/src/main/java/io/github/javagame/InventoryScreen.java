@@ -40,7 +40,6 @@ public class InventoryScreen implements Screen {
         game.batch.draw(walnut.getTexture(),0,0,2,2);
 
         
-
     }
 
         @Override
