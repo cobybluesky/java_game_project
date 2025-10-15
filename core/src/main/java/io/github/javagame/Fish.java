@@ -1,31 +1,24 @@
 package io.github.javagame;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Fish {
     private String type;
-    private float speed;
-    private float delay;
-    private float sequences;
+    private float arrowSpeed;
+    private float arrowDelay;
+    private float sequenceLen;
     private float length;
     private Texture texture;
     private float weight;
 
-
-
-
-
-
-    public Fish(String initType, float initSpeed, float initDelay, float initSequences, float initLength, float initWeight, String initTexture) {
-        type = initType;
-        speed = initSpeed;
-        delay = initDelay;
-        sequences = initSequences;
-        length = initLength;
-        texture = new Texture(Gdx.files.internal(initTexture));
-        weight = initWeight;
-
+    // using "this." is more clean and pretty imo
+    public Fish(String type, float arrowSpeed, float arrowDelay, float sequenceLen, float length, float weight, String texture) {
+        this.type = type;
+        this.arrowSpeed = arrowSpeed;
+        this.arrowDelay = arrowDelay;
+        this.sequenceLen = sequenceLen;
+        this.length = length;
+        this.texture = new Texture(texture);// texture is the file path as a string
+        this.weight = weight;
     }
 
     public Texture getTexture() {
@@ -36,16 +29,15 @@ public class Fish {
         return type;
     }
 
-    public float getSpeed() {
-        return speed;
+    public float getArrowSpeed() {
+        return arrowSpeed;
     }
-    
-    public float getDelay() {
-        return delay;
-    }
-    public float getSequences() {
 
-        return sequences;
+    public float getArrowDelay() {
+        return arrowDelay;
+    }
+    public float getSequenceLen() {
+        return sequenceLen;
     }
 
     public float getLength() {
@@ -57,4 +49,4 @@ public class Fish {
     }
 
 
-}   
+}

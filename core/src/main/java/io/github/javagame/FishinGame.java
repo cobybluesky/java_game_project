@@ -11,11 +11,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import java.util.ArrayList;
+
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class FishinGame extends Game {
     public SpriteBatch batch;
     public FitViewport viewport;
     public ArrowHandler arrowHandler;
+    public ArrayList<Fish> fishInventory;
     private Texture image;
     private Texture fishingRod;
     private OrthographicCamera camera;// what is this for?
@@ -24,6 +27,7 @@ public class FishinGame extends Game {
     public void create() {
         camera = new OrthographicCamera();
         batch = new SpriteBatch();
+        fishInventory = new ArrayList<>();
         arrowHandler = new ArrowHandler(this);
         // one "meter" will be 32 pixels (window size 960 x 640)
         viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size

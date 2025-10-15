@@ -18,7 +18,7 @@ public class ArrowHandler {
     private float arrowSpeed;
     private float arrowDelay;// time between arrows
     private float arrowTimer;
-    private float arrowChance = 0.8f;// chance an arrow actually spawns (possibility of blank rows)
+    private float arrowChance = 0.95f;// chance an arrow actually spawns (possibility of blank rows)
     private int sequenceRows; // number of rows (w or w/o arrows) in the sequence
     private int rowCount;
     private boolean spawnArrows = false;

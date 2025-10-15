@@ -13,10 +13,10 @@ import com.badlogic.gdx.graphics.GL20;
 
 
 public class InventoryScreen implements Screen {
-    
+
     final FishinGame game;
-    
- 
+
+
 
     public InventoryScreen(final FishinGame game) {
         this.game = game;
@@ -25,8 +25,8 @@ public class InventoryScreen implements Screen {
 
 
 
-    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"assets\\fish\\walnut.png");
-    Fish narwhal = new Fish("Narwhal",2f,2f,5f,80.2f,4f,"assets\\fish\\narwhal.png");
+    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"fish/walnut.png");
+    Fish narwhal = new Fish("Narwhal",2f,2f,5f,80.2f,4f,"fish/narwhal.png");
 
     @Override
     public void resize(int width, int height) {
@@ -44,7 +44,7 @@ public class InventoryScreen implements Screen {
         game.batch.draw(walnut.getTexture(),0,0,30,30);
         game.batch.end();
 
-        
+
     }
 
         @Override

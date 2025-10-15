@@ -19,19 +19,16 @@ public class GameScreen implements Screen {
     private Texture exclamationPoint;
     private boolean fishingDisabled;
     private boolean instructionsVisible;
-    public ArrayList<Fish> fishInventory;
+    // fish inventory is now a variable in game (game.fishInventory), since it should persist between screens
+    //public ArrayList<Fish> fishInventory;
     private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
-    
+
 
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
     //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
 
-    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"assets\\fish\\walnut.png");
-    
-    
-    
-    
-    
+    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"fish/walnut.png");
+
     double fishDelay = -100;
     boolean isCast = false;
     boolean fishHooked = false;
@@ -44,7 +41,6 @@ public class GameScreen implements Screen {
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
         instructionsVisible = true; //sets the variable, tho I'm not sure if it repeats over and over. Hope not.
-        this.fishInventory = new ArrayList<>();
     }
 
     @Override
@@ -67,13 +63,14 @@ public class GameScreen implements Screen {
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !isCast) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
             System.out.println("Fish time");
             // start timer
             fishDelay = 2 + (Math.random() * 4);// delay will be between 2 and 6 seconds
             isCast = true;
             instructionsVisible = false;
             System.out.println(fishDelay);
+            fishingDisabled = true;
         }
 
         if (fishDelay > 0) {
@@ -88,50 +85,36 @@ public class GameScreen implements Screen {
             // get some fish
         }
 
-        //detects if person clicks fast enough 
+        //detects if person clicks fast enough
 
-        if (fishHooked == true) {
+        if (fishHooked) {
             //System.out.println("this is running");
             timeFrame -= delta; //copying what caleb pulled earlier lol
-            game.batch.draw(exclamationPoint,16,9,5,5);
+            game.batch.draw(exclamationPoint, 16, 9, 5, 5);
 
-            if (timeFrame >= 0 && Gdx.input.isButtonPressed(Input.Buttons.RIGHT))
-            {
+            if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 System.out.println("Successful reel in");
                 fishHooked = false;
                 // 4 testing
-                game.arrowHandler.beginArrowSequence(3.0f, 1.0f, 10);
+                game.arrowHandler.beginArrowSequence(4.0f, 1.0f, 10);
                 fishingDisabled = false;// this will need to be moved/changed eventually
 
                 //Just adding the fish regardless atm until we can tell if they succeed or fail
-                if (!fishInventory.contains(walnut)) {
-                    fishInventory.add(walnut);
+                if (!game.fishInventory.contains(walnut)) {
+                    game.fishInventory.add(walnut);
                 }
-                
-                
-
-    
-            }
-
-            else if (timeFrame < 0) {
+            } else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
+                fishingDisabled = false;
             }
         }
-        
         game.batch.end();
-
-
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {    //temporary access to inventory. We'll hopefully change it to button later
             game.setScreen(new InventoryScreen(game));
             dispose();
         }
-
-
-
     }
-
-
 
     @Override
     public void resize(int width, int height) {
