@@ -41,7 +41,7 @@ public class InventoryScreen implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
         game.batch.begin();
-        game.batch.draw(walnut.getTexture(),0,0,10,10);
+        game.batch.draw(walnut.getTexture(),0,0,30,30);
         game.batch.end();
 
         

@@ -19,9 +19,10 @@ public class GameScreen implements Screen {
     private Texture exclamationPoint;
     private boolean fishingDisabled;
     private boolean instructionsVisible;
-
-    private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
     public ArrayList<Fish> fishInventory;
+    private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
+    
+
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
     //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
 
@@ -43,6 +44,7 @@ public class GameScreen implements Screen {
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
         instructionsVisible = true; //sets the variable, tho I'm not sure if it repeats over and over. Hope not.
+        this.fishInventory = new ArrayList<>();
     }
 
     @Override
@@ -73,9 +75,11 @@ public class GameScreen implements Screen {
             instructionsVisible = false;
             System.out.println(fishDelay);
         }
+
         if (fishDelay > 0) {
             fishDelay -= delta;// delta - time between frames in seconds
         }
+
         if (fishDelay <= 0 && isCast) {
             System.out.println("fish caught");
             fishDelay = -1;
@@ -100,8 +104,11 @@ public class GameScreen implements Screen {
                 fishingDisabled = false;// this will need to be moved/changed eventually
 
                 //Just adding the fish regardless atm until we can tell if they succeed or fail
+                if (!fishInventory.contains(walnut)) {
+                    fishInventory.add(walnut);
+                }
                 
-                fishInventory.add(walnut);
+                
 
     
             }
@@ -110,12 +117,8 @@ public class GameScreen implements Screen {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
             }
-
-        
-
         }
-
-
+        
         game.batch.end();
 
 
@@ -123,6 +126,7 @@ public class GameScreen implements Screen {
             game.setScreen(new InventoryScreen(game));
             dispose();
         }
+
 
 
     }
@@ -159,3 +163,5 @@ public class GameScreen implements Screen {
 
     }
 }
+
+
