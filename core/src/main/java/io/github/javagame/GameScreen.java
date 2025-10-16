@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-
+import com.badlogic.gdx.graphics.g2d.BitmapFont; /*Put in text */
 import java.util.ArrayList;
 
 //https://alohaeee.itch.io/fishing-assets for the fishin lady
