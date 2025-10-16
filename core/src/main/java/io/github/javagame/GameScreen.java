@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class GameScreen implements Screen {
     boolean fishHooked = false;
     double timeFrame = 1.8;
 
+    BitmapFont font = new BitmapFont(Gdx.files.internal("font/default-72.fnt"));
+
     public GameScreen(final FishinGame game) {
         this.game = game;
         gameBg = new Texture("kiddiepool2.png");
@@ -46,7 +49,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
-        game.viewport.apply();
+        //game.viewport.apply();
 
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
@@ -63,6 +66,7 @@ public class GameScreen implements Screen {
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
+        //maybe handle this logic elsewhere???if we have time for refactoring
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
             System.out.println("Fish time");
             // start timer
@@ -109,7 +113,13 @@ public class GameScreen implements Screen {
                 fishingDisabled = false;
             }
         }
+        // RENDER INVENTORY TEXT, HOPEFULLY
+        game.batch.setProjectionMatrix(game.uiViewport.getCamera().combined);
+        font.setColor(Color.BLACK);
+        font.getData().setScale(0.3f);
+        font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-30);
         game.batch.end();
+
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {    //temporary access to inventory. We'll hopefully change it to button later
             game.setScreen(new InventoryScreen(game));
             dispose();
@@ -119,6 +129,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         game.viewport.update(width, height, true);
+        game.uiViewport.update(width,height, true);
     }
 
     @Override
