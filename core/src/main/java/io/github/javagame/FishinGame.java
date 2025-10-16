@@ -10,23 +10,32 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class FishinGame extends Game {
     public SpriteBatch batch;
     public FitViewport viewport;
     public ArrowHandler arrowHandler;
+    public ArrayList<Fish> fishInventory;
     private Texture image;
     private Texture fishingRod;
-    private OrthographicCamera camera;// what is this for?
+    private OrthographicCamera gameCamera;
+    private OrthographicCamera uiCamera;
+    public FitViewport uiViewport;
 
     @Override
     public void create() {
-        camera = new OrthographicCamera();
+        gameCamera = new OrthographicCamera();
+        uiCamera = new OrthographicCamera();
         batch = new SpriteBatch();
+        fishInventory = new ArrayList<>();
         arrowHandler = new ArrowHandler(this);
         // one "meter" will be 32 pixels (window size 960 x 640)
-        viewport = new FitViewport(30,20,camera); //does something to set up proportion based on the actual screen size
+        viewport = new FitViewport(30,20,gameCamera); //does something to set up proportion based on the actual screen size
+        uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         image = new Texture("fishfishfishfish.jpeg");
         //fishingRod = new Texture("fishingrod.png");
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.BitmapFont; /*Put in text */
 import java.util.ArrayList;
@@ -17,18 +18,24 @@ public class GameScreen implements Screen {
     private Texture fisher;
     private Texture fishtext;
     private Texture exclamationPoint;
+    private boolean fishingDisabled;
     private boolean instructionsVisible;
-
+    // fish inventory is now a variable in game (game.fishInventory), since it should persist between screens
+    //public ArrayList<Fish> fishInventory;
     private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
-    private ArrayList<String> fishInventory;
+
+
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
-    //the fish and their chances of being caught. For now we should just stick with an equally random chance.
-    // alternatively we could let the fish be objects which define their name/type and chance of being caught
+    //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
+
+    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"fish/walnut.png");
+
     double fishDelay = -100;
     boolean isCast = false;
     boolean fishHooked = false;
     double timeFrame = 1.8;
-    boolean fishingDisabled = false;
+
+    BitmapFont font = new BitmapFont(Gdx.files.internal("font/default-72.fnt"));
 
     public GameScreen(final FishinGame game) {
         this.game = game;
@@ -42,7 +49,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
-        game.viewport.apply();
+        //game.viewport.apply();
 
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
@@ -59,6 +66,7 @@ public class GameScreen implements Screen {
         //keeps camera units and drawing units consistent, while Gdx.graphics uses pixels instead or something. It's weird
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
+        //maybe handle this logic elsewhere???if we have time for refactoring
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
             System.out.println("Fish time");
             // start timer
@@ -68,15 +76,16 @@ public class GameScreen implements Screen {
             System.out.println(fishDelay);
             fishingDisabled = true;
         }
+
         if (fishDelay > 0) {
             fishDelay -= delta;// delta - time between frames in seconds
         }
+
         if (fishDelay <= 0 && isCast) {
             System.out.println("fish caught");
             fishDelay = -1;
             isCast = false;
             fishHooked = true;
-            timeFrame = 1.8;
             // get some fish
         }
 
@@ -85,35 +94,42 @@ public class GameScreen implements Screen {
         if (fishHooked) {
             //System.out.println("this is running");
             timeFrame -= delta; //copying what caleb pulled earlier lol
-            game.batch.draw(exclamationPoint,16,9,5,5);
+            game.batch.draw(exclamationPoint, 16, 9, 5, 5);
 
-            if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT))
-            {
+            if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 System.out.println("Successful reel in");
                 fishHooked = false;
                 // 4 testing
-                game.arrowHandler.beginArrowSequence(3.0f, 1.0f, 10);
+                game.arrowHandler.beginArrowSequence(4.0f, 1.0f, 10);
                 fishingDisabled = false;// this will need to be moved/changed eventually
-            }
 
-            else if (timeFrame < 0) {
+                //Just adding the fish regardless atm until we can tell if they succeed or fail
+                if (!game.fishInventory.contains(walnut)) {
+                    game.fishInventory.add(walnut);
+                }
+            } else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
                 fishingDisabled = false;
             }
-
         }
-
+        // RENDER INVENTORY TEXT, HOPEFULLY
+        game.batch.setProjectionMatrix(game.uiViewport.getCamera().combined);
+        font.setColor(Color.BLACK);
+        font.getData().setScale(0.3f);
+        font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-30);
         game.batch.end();
 
-
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {    //temporary access to inventory. We'll hopefully change it to button later
+            game.setScreen(new InventoryScreen(game));
+            dispose();
+        }
     }
-
-
 
     @Override
     public void resize(int width, int height) {
         game.viewport.update(width, height, true);
+        game.uiViewport.update(width,height, true);
     }
 
     @Override
@@ -141,3 +157,5 @@ public class GameScreen implements Screen {
 
     }
 }
+
+
