@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
     public GameScreen(final FishinGame game) {
         this.game = game;
         gameBg = new Texture("kiddiepool2.png");
-        fisher = new Texture("Fisher000.png");
+        fisher = new Texture("boatman.png");
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
         instructionsVisible = true; //sets the variable, tho I'm not sure if it repeats over and over. Hope not.
