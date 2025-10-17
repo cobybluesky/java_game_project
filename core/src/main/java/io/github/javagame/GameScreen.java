@@ -72,9 +72,9 @@ public class GameScreen implements Screen {
         game.batch.begin();
         game.batch.draw(gameBg, 0, 0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
         if (isCast) {
-            game.batch.draw(fisher2, 10, 5, 10, 10);
+            game.batch.draw(fisher, 10, 5, 10, 10);
         } else {
-            game.batch.draw(fisher,10,5,10,10);
+            game.batch.draw(fisher2,10,5,10,10);
         }
 
         if (instructionsVisible) {
@@ -155,8 +155,8 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.uiViewport.getCamera().combined);
         font.setColor(Color.BLACK);
         font.getData().setScale(0.3f);
-        font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-170, Gdx.graphics.getHeight()-30);
-        font.draw(game.batch, inventoryManager.getInventoryString(), Gdx.graphics.getWidth()-170, Gdx.graphics.getHeight()-70);
+        font.draw(game.batch, "Inventory", game.uiViewport.getWorldWidth()-170, game.uiViewport.getWorldHeight()-30);
+        font.draw(game.batch, inventoryManager.getInventoryString(), game.uiViewport.getWorldWidth()-170, game.uiViewport.getWorldHeight()-70);
         font.draw(game.batch, infoText, 30, 30);
         game.batch.end();
     }
