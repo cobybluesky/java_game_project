@@ -16,6 +16,7 @@ public class GameScreen implements Screen {
     final FishinGame game;
     private Texture gameBg;
     private Texture fisher;
+    private Texture fisher2;
     private Texture fishtext;
     private Texture exclamationPoint;
     private Texture greenRect;
@@ -47,7 +48,8 @@ public class GameScreen implements Screen {
     public GameScreen(final FishinGame game) {
         this.game = game;
         gameBg = new Texture("kiddiepool2.png");
-        fisher = new Texture("boatman2.png");
+        fisher = new Texture("boatman.png");
+        fisher2 = new Texture("boatman2.png");
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
         greenRect = new Texture("green_rectangle.jpeg");
@@ -68,7 +70,11 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
         game.batch.draw(gameBg, 0, 0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
-        game.batch.draw(fisher,10,5,10,10);
+        if (isCast) {
+            game.batch.draw(fisher2, 10, 5, 10, 10);
+        } else {
+            game.batch.draw(fisher,10,5,10,10);
+        }
 
         if (instructionsVisible) {
             game.batch.draw(fishtext,0,15,15,3);
@@ -88,7 +94,7 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
             System.out.println("Fish time");
-            fisher = Texture("boatman.png");  /*May die due to privacy */
+            //fisher = Texture("boatman.png");  /*May die due to privacy */
             // start timer
             fishDelay = 2 + (Math.random() * 4);// delay will be between 2 and 6 seconds
             isCast = true;
@@ -122,7 +128,7 @@ public class GameScreen implements Screen {
             game.batch.draw(exclamationPoint, 16, 9, 5, 5);
             if (reelTimer >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 System.out.println("Successful reel in");
-                fisher = Texture("boatman2.png");  /*May die due to privacy */
+                //fisher = Texture("boatman2.png");  /*May die due to privacy */
                 fishHooked = false;
                 Fish hookedFish = chooseRandomFish();
                 infoText = "You caught a "+hookedFish.getType()+"!";
@@ -131,7 +137,7 @@ public class GameScreen implements Screen {
             } else if (reelTimer < 0) {
                 infoText = "You lost the fish :(";
                 System.out.println("U suck and didn't get it lol");
-                fisher = Texture("boatman2.png");    /*May die due to privacy */
+                //fisher = Texture("boatman2.png");    /*May die due to privacy */
                 fishHooked = false;
                 fishingDisabled = false;
             }
