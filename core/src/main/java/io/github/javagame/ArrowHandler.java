@@ -3,8 +3,11 @@ package io.github.javagame;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.HashMap;
+import com.badlogic.gdx.Input;
 
 public class ArrowHandler {
     private final FishinGame game;
@@ -14,6 +17,15 @@ public class ArrowHandler {
         new Sprite(new Texture("arrows/c_down.png")),
         new Sprite(new Texture("arrows/colour_right.png"))
     };
+
+    private Integer[] keyPresses = {
+        Input.Keys.LEFT,Input.Keys.UP,Input.Keys.DOWN,Input.Keys.RIGHT
+    };
+
+
+
+    private HashMap<Integer,Integer> checkArrows = new HashMap<Integer,Integer>();
+
     private float[] arrowColumns = {7, 10, 13, 16};
     private float arrowSpeed;
     private float arrowDelay;// time between arrows
@@ -30,7 +42,37 @@ public class ArrowHandler {
 
     public ArrowHandler(FishinGame game) {
         this.game = game;
+
+        checkArrows.put(Input.Keys.LEFT,0);
+        checkArrows.put(Input.Keys.UP,1);
+        checkArrows.put(Input.Keys.DOWN,2);
+        checkArrows.put(Input.Keys.RIGHT,3);
+
     }
+
+
+    public float[] getColumns() {
+
+        return(arrowColumns);
+    }
+
+    public ArrayList<Sprite> getArrowArray() {
+        return visibleArrows;
+    }
+
+    public HashMap<Integer,Integer> getCheckArrows() {
+        return checkArrows;
+    }
+
+    public Sprite[] getArrowDirections() {
+        return arrowDirections;
+    }
+
+    public Integer[] getKeys() {
+        return keyPresses;
+    }
+
+
     // for creating an arrow with random direction
     public void createArrow() {
         int direction = random.nextInt(4);

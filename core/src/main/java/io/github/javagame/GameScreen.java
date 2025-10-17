@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -89,24 +90,49 @@ public class GameScreen implements Screen {
             // get some fish
         }
 
-        //detects if person clicks fast enough
 
+        //detects if person clicks fast enough
+        for (int i = game.arrowHandler.getArrowArray().size()-1; i>=0; i--) {
+
+                if (game.arrowHandler.getArrowArray().get(i).getY() > game.viewport.getWorldHeight()-5 && (game.arrowHandler.getArrowArray().get(i).getY() < game.viewport.getWorldHeight()+1)) {
+                    System.out.println("this happened ig"); //checks if it's within these coords
+                    for(int n = 0; n<=3; n++) {
+                        System.out.println("checkin"); //iterates through all possible keys the player pressed, and if they match up with the arrows column
+                        if (Gdx.input.isKeyPressed(game.arrowHandler.getKeys()[n]) && game.arrowHandler.getArrowArray().get(i).getX() == game.arrowHandler.getColumns()[n] ){
+                            System.out.println("Hooray!!!!!");
+                            game.arrowHandler.getArrowArray().remove(game.arrowHandler.getArrowArray().get(i));
+
+                                
+                        }
+                        else {
+                                System.out.println("NBOOOO");
+                            }
+                         }
+                    }
+                }
         if (fishHooked) {
             //System.out.println("this is running");
             timeFrame -= delta; //copying what caleb pulled earlier lol
             game.batch.draw(exclamationPoint, 16, 9, 5, 5);
-
             if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 System.out.println("Successful reel in");
                 fishHooked = false;
                 // 4 testing
                 game.arrowHandler.beginArrowSequence(4.0f, 1.0f, 10);
+                
                 fishingDisabled = false;// this will need to be moved/changed eventually
+                System.out.println("this happens too");
+                
+                
+                //arrow functionality (checks if it crosses a line)
 
-                //Just adding the fish regardless atm until we can tell if they succeed or fail
-                if (!game.fishInventory.contains(walnut)) {
-                    game.fishInventory.add(walnut);
-                }
+
+                 
+
+
+
+
+
             } else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
