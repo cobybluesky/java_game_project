@@ -1,17 +1,19 @@
 package io.github.javagame;
 import com.badlogic.gdx.graphics.Texture;
 
+import java.util.ArrayList;
+
 public class Fish {
     private String type;
     private float arrowSpeed;
     private float arrowDelay;
-    private float sequenceLen;
+    private int sequenceLen;
     private float length;
     private Texture texture;
     private float chanceweight;
 
     // using "this." is more clean and pretty imo
-    public Fish(String type, float arrowSpeed, float arrowDelay, float sequenceLen, float length, float chanceweight, String texture) {
+    public Fish(String type, float arrowSpeed, float arrowDelay, int sequenceLen, float length, float chanceweight, String texture) {
         this.type = type;
         this.arrowSpeed = arrowSpeed;
         this.arrowDelay = arrowDelay;
@@ -36,7 +38,7 @@ public class Fish {
     public float getArrowDelay() {
         return arrowDelay;
     }
-    public float getSequenceLen() {
+    public int getSequenceLen() {
         return sequenceLen;
     }
 

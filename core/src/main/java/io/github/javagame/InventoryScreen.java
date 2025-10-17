@@ -11,7 +11,9 @@ import com.badlogic.gdx.Input;
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.GL20;
 
-
+// UNUSED
+// we can delete later
+// we did not have time for this
 public class InventoryScreen implements Screen {
 
     final FishinGame game;
@@ -22,11 +24,6 @@ public class InventoryScreen implements Screen {
         this.game = game;
 
     }
-
-
-
-    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"fish/walnut.png");
-    Fish narwhal = new Fish("Narwhal",2f,2f,5f,80.2f,4f,"fish/narwhal.png");
 
     @Override
     public void resize(int width, int height) {
@@ -41,7 +38,7 @@ public class InventoryScreen implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
         game.batch.begin();
-        game.batch.draw(walnut.getTexture(),0,0,30,30);
+
         game.batch.end();
 
 

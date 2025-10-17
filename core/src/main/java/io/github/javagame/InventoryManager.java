@@ -3,11 +3,9 @@ package io.github.javagame;
 import java.util.HashMap;
 
 public class InventoryManager {
-    FishinGame game;
-    HashMap<Fish, Integer> inventory = new HashMap<Fish, Integer>();
+    private HashMap<Fish, Integer> inventory = new HashMap<Fish, Integer>();
 
-    public InventoryManager(FishinGame game, Fish[] allFish) {
-        this.game = game;
+    public InventoryManager(Fish[] allFish) {
         // initialize inventory with all fish at zero
         for (Fish fish : allFish) {
             this.inventory.put(fish, 0);
@@ -21,5 +19,9 @@ public class InventoryManager {
             output += fish.getType()+" x"+inventory.get(fish)+"\n";
         }
         return output;
+    }
+    // add 1 to the # of given fish
+    public void addFish(Fish fish) {
+        inventory.put(fish, inventory.get(fish) + 1);
     }
 }

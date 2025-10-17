@@ -6,9 +6,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
+
 import java.util.ArrayList;
+import java.util.List;
 
 //https://alohaeee.itch.io/fishing-assets for the fishin lady
 
@@ -22,15 +25,18 @@ public class GameScreen implements Screen {
     private boolean instructionsVisible;
     // fish inventory is now a variable in game (game.fishInventory), since it should persist between screens
     //public ArrayList<Fish> fishInventory;
-    private String [] fishTypes = {"Codfish","Salmon","Large Bass","Narwhal","Megaladon","Walnut","Plague","Dogfish"};
-
+    private InventoryManager inventoryManager;
 
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
     //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
 
-    Fish walnut = new Fish("Walnut",5f,1f,10f,3f,4f,"fish/walnut.png");
-    Fish narwhal = new Fish("Narwhal", 15f,3f,20f, 200.5f, 5f, "fish/narwhal.png");
-    Fish plague = new Fish("Plague", 2f, 1f, 40f, 0f, 10f, "fish/plague.png");
+    Fish walnut = new Fish("Walnut",5f,1f,10,3f,5f,"fish/walnut.png");
+    Fish narwhal = new Fish("Narwhal", 15f,3f,20, 200.5f, 3f, "fish/narwhal.png");
+    Fish plague = new Fish("Plague", 2f, 1f, 40, 0f, 2f, "fish/plague.png");
+
+    private Fish[] allFish = {walnut, narwhal, plague};
+    private double totalWeight = 0.0;
+    private ArrayList<Double> cumulativeWeights = new ArrayList<Double>();
 
     double fishDelay = -100;
     boolean isCast = false;
@@ -46,6 +52,12 @@ public class GameScreen implements Screen {
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
         instructionsVisible = true; //sets the variable, tho I'm not sure if it repeats over and over. Hope not.
+        inventoryManager = new InventoryManager(allFish);
+        // for weighted choosing of the fish
+        for (Fish fish : allFish) {
+            totalWeight += fish.getChanceWeight();
+            cumulativeWeights.add(totalWeight);
+        }
     }
 
     @Override
@@ -91,7 +103,6 @@ public class GameScreen implements Screen {
             // get some fish
         }
 
-
         //detects if person clicks fast enough
         for (int i = game.arrowHandler.getArrowArray().size()-1; i>=0; i--) {
 
@@ -99,11 +110,11 @@ public class GameScreen implements Screen {
                     System.out.println("this happened ig"); //checks if it's within these coords
                     for(int n = 0; n<=3; n++) {
                         System.out.println("checkin"); //iterates through all possible keys the player pressed, and if they match up with the arrows column
-                        if (Gdx.input.isKeyPressed(game.arrowHandler.getKeys()[n]) && game.arrowHandler.getArrowArray().get(i).getX() == game.arrowHandler.getColumns()[n] ){
+                        if (Gdx.input.isKeyJustPressed(game.arrowHandler.getKeys()[n]) && game.arrowHandler.getArrowArray().get(i).getX() == game.arrowHandler.getColumns()[n] ){
                             System.out.println("Hooray!!!!!");
                             game.arrowHandler.getArrowArray().remove(game.arrowHandler.getArrowArray().get(i));
 
-                                
+
                         }
                         else {
                                 System.out.println("NBOOOO");
@@ -118,21 +129,11 @@ public class GameScreen implements Screen {
             if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 System.out.println("Successful reel in");
                 fishHooked = false;
-                // 4 testing
-                game.arrowHandler.beginArrowSequence(4.0f, 1.0f, 10);
-                
-                fishingDisabled = false;// this will need to be moved/changed eventually
-                System.out.println("this happens too");
-                
-                
-                //arrow functionality (checks if it crosses a line)
-
-
-                 
-
-
-
-
+                Fish hookedFish = chooseRandomFish();
+                System.out.println("You caught a "+hookedFish.getType()+"!");
+                game.arrowHandler.beginArrowSequence(hookedFish.getArrowSpeed(), hookedFish.getArrowDelay(), hookedFish.getSequenceLen());
+                // once the sequence is finished, the player will get the fish or not depending on score
+                fishingDisabled = false;// this will need to be moved/changed eventually (once sequence ends)
 
             } else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
@@ -145,12 +146,28 @@ public class GameScreen implements Screen {
         font.setColor(Color.BLACK);
         font.getData().setScale(0.3f);
         font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-30);
+        font.draw(game.batch, inventoryManager.getInventoryString(), Gdx.graphics.getWidth()-130, Gdx.graphics.getHeight()-70);
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {    //temporary access to inventory. We'll hopefully change it to button later
             game.setScreen(new InventoryScreen(game));
             dispose();
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            inventoryManager.addFish(chooseRandomFish());
+        }
+    }
+
+    public Fish chooseRandomFish() {
+        // choose a random fish with weighted probability
+        double random = Math.random() * totalWeight;
+        for (int i = 0; i < allFish.length; i++) {
+            if (cumulativeWeights.get(i) >= random) {
+                return allFish[i];
+            }
+        }
+        // should not happen.
+        return null;
     }
 
     @Override
