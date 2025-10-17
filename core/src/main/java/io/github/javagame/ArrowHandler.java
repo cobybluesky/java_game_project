@@ -113,12 +113,11 @@ public class ArrowHandler {
                     points++;
                 }
             }
-
-        }
-        if (arrowCount >= sequenceArrows) {
-            // end sequence, kind of
-            spawnArrows = false;
-            if (visibleArrows.isEmpty()) { pendingResult = true; }
+            if (arrowCount >= sequenceArrows) {
+                // end sequence, kind of
+                spawnArrows = false;
+                if (visibleArrows.isEmpty()) { pendingResult = true; }
+            }
         }
     }
 
@@ -134,6 +133,7 @@ public class ArrowHandler {
         arrowSpeed = pendingFish.getArrowSpeed();
         sequenceArrows = pendingFish.getSequenceLen();
         arrowTimer = arrowDelay;
+        arrowCount = 0;
         spawnArrows = true;
     }
 
@@ -149,8 +149,14 @@ public class ArrowHandler {
         return pendingResult;
     }
 
+    public float getScore() {
+        return points/(float) sequenceArrows;
+    }
+
     public boolean getsFish() {
         System.out.println(points/(float) sequenceArrows);
+        System.out.println(points);
+        System.out.println(sequenceArrows);
         return points/(float) sequenceArrows > 0.8;
     }
 

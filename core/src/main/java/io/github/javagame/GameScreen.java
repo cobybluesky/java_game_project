@@ -18,6 +18,7 @@ public class GameScreen implements Screen {
     private Texture fisher;
     private Texture fishtext;
     private Texture exclamationPoint;
+    private Texture greenRect;
     private boolean fishingDisabled;
     private boolean instructionsVisible;
     private InventoryManager inventoryManager;
@@ -37,6 +38,9 @@ public class GameScreen implements Screen {
     boolean isCast = false;
     boolean fishHooked = false;
     double timeFrame = 1.8;
+    double reelTimer = 1.8;
+
+    String infoText = "Click to Cast";
 
     BitmapFont font = new BitmapFont(Gdx.files.internal("font/default-72.fnt"));
 
@@ -46,6 +50,7 @@ public class GameScreen implements Screen {
         fisher = new Texture("boatman.png");
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
+        greenRect = new Texture("green_rectangle.jpeg");
         instructionsVisible = true; //sets the variable, tho I'm not sure if it repeats over and over. Hope not.
         inventoryManager = new InventoryManager(allFish);
         // for weighted choosing of the fish
@@ -69,6 +74,10 @@ public class GameScreen implements Screen {
             game.batch.draw(fishtext,0,15,15,3);
         }
 
+        if (game.arrowHandler.getPendingFish() != null) {
+            game.batch.draw(greenRect, 6, game.viewport.getWorldHeight()-2, 18, 2);
+        }
+
         game.arrowHandler.drawArrows();
         game.arrowHandler.updateArrows(delta);
 
@@ -85,6 +94,7 @@ public class GameScreen implements Screen {
             instructionsVisible = false;
             System.out.println(fishDelay);
             fishingDisabled = true;
+            infoText = "Awaiting fish...";
         }
 
         if (fishDelay > 0) {
@@ -93,10 +103,11 @@ public class GameScreen implements Screen {
 
         if (fishDelay <= 0 && isCast) {
             System.out.println("fish caught");
+            reelTimer = timeFrame;
             fishDelay = -1;
             isCast = false;
             fishHooked = true;
-            // get some fish
+            infoText = "You hooked a fish! Right click to reel";
         }
 
         //detects if person clicks fast enough
@@ -106,15 +117,17 @@ public class GameScreen implements Screen {
         // ALSO I'M USING INPUTPROCESSOR NOW.
         if (fishHooked) {
             //System.out.println("this is running");
-            timeFrame -= delta; //copying what caleb pulled earlier lol
+            reelTimer -= delta; //copying what caleb pulled earlier lol
             game.batch.draw(exclamationPoint, 16, 9, 5, 5);
-            if (timeFrame >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+            if (reelTimer >= 0 && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
                 System.out.println("Successful reel in");
                 fishHooked = false;
                 Fish hookedFish = chooseRandomFish();
-                System.out.println("You caught a "+hookedFish.getType()+"!");
+                infoText = "You caught a "+hookedFish.getType()+"!";
+                //System.out.println("You caught a "+hookedFish.getType()+"!");
                 game.arrowHandler.beginArrowSequence(hookedFish);
-            } else if (timeFrame < 0) {
+            } else if (reelTimer < 0) {
+                infoText = "You lost the fish :(";
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
                 fishingDisabled = false;
@@ -124,6 +137,7 @@ public class GameScreen implements Screen {
             if (game.arrowHandler.getsFish()) {
                 inventoryManager.addFish(game.arrowHandler.getPendingFish());
             }
+            infoText = "Accuracy: "+game.arrowHandler.getScore()*100+"%";
             game.arrowHandler.endArrowSequence();
             fishingDisabled = false;
         }
@@ -131,8 +145,9 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.uiViewport.getCamera().combined);
         font.setColor(Color.BLACK);
         font.getData().setScale(0.3f);
-        font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-30);
-        font.draw(game.batch, inventoryManager.getInventoryString(), Gdx.graphics.getWidth()-130, Gdx.graphics.getHeight()-70);
+        font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-170, Gdx.graphics.getHeight()-30);
+        font.draw(game.batch, inventoryManager.getInventoryString(), Gdx.graphics.getWidth()-170, Gdx.graphics.getHeight()-70);
+        font.draw(game.batch, infoText, 30, 30);
         game.batch.end();
     }
 
