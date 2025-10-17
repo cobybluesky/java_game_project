@@ -43,11 +43,6 @@ public class ArrowHandler {
     public ArrowHandler(FishinGame game) {
         this.game = game;
 
-        checkArrows.put(Input.Keys.LEFT,0);
-        checkArrows.put(Input.Keys.UP,1);
-        checkArrows.put(Input.Keys.DOWN,2);
-        checkArrows.put(Input.Keys.RIGHT,3);
-
     }
 
 
@@ -58,14 +53,6 @@ public class ArrowHandler {
 
     public ArrayList<Sprite> getArrowArray() {
         return visibleArrows;
-    }
-
-    public HashMap<Integer,Integer> getCheckArrows() {
-        return checkArrows;
-    }
-
-    public Sprite[] getArrowDirections() {
-        return arrowDirections;
     }
 
     public Integer[] getKeys() {

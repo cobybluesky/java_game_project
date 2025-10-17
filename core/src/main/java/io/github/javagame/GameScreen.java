@@ -33,8 +33,11 @@ public class GameScreen implements Screen {
     Fish walnut = new Fish("Walnut",5f,1f,10,3f,5f,"fish/walnut.png");
     Fish narwhal = new Fish("Narwhal", 15f,3f,20, 200.5f, 3f, "fish/narwhal.png");
     Fish plague = new Fish("Plague", 2f, 1f, 40, 0f, 2f, "fish/plague.png");
+    Fish cod = new Fish("Cod",3.5f,1.5f,8,15f,4f,"fish/placeholder.png");
+    Fish bass = new Fish("Bass",6f,2f,15,30f,3f,"fish/placeholder.png");
+    Fish megaladon = new Fish("Megaladon",20f,2f,35,1200f,0.1f,"fish/placeholder.png");
 
-    private Fish[] allFish = {walnut, narwhal, plague};
+    private Fish[] allFish = {walnut, narwhal, plague,cod,bass,megaladon};
     private double totalWeight = 0.0;
     private ArrayList<Double> cumulativeWeights = new ArrayList<Double>();
 
@@ -68,7 +71,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
         game.batch.begin();
         game.batch.draw(gameBg, 0, 0,game.viewport.getWorldWidth(),game.viewport.getWorldHeight());
-        game.batch.draw(fisher,10,10,4,4);
+        game.batch.draw(fisher,10,5,10,10);
 
         if (instructionsVisible) {
             game.batch.draw(fishtext,0,15,15,3);
@@ -107,11 +110,10 @@ public class GameScreen implements Screen {
         for (int i = game.arrowHandler.getArrowArray().size()-1; i>=0; i--) {
 
                 if (game.arrowHandler.getArrowArray().get(i).getY() > game.viewport.getWorldHeight()-5 && (game.arrowHandler.getArrowArray().get(i).getY() < game.viewport.getWorldHeight()+1)) {
-                    System.out.println("this happened ig"); //checks if it's within these coords
+
                     for(int n = 0; n<=3; n++) {
-                        System.out.println("checkin"); //iterates through all possible keys the player pressed, and if they match up with the arrows column
+                        //iterates through all possible keys the player pressed, and if they match up with the arrows column
                         if (Gdx.input.isKeyJustPressed(game.arrowHandler.getKeys()[n]) && game.arrowHandler.getArrowArray().get(i).getX() == game.arrowHandler.getColumns()[n] ){
-                            System.out.println("Hooray!!!!!");
                             game.arrowHandler.getArrowArray().remove(game.arrowHandler.getArrowArray().get(i));
 
 
@@ -149,10 +151,6 @@ public class GameScreen implements Screen {
         font.draw(game.batch, inventoryManager.getInventoryString(), Gdx.graphics.getWidth()-130, Gdx.graphics.getHeight()-70);
         game.batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.R)) {    //temporary access to inventory. We'll hopefully change it to button later
-            game.setScreen(new InventoryScreen(game));
-            dispose();
-        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             inventoryManager.addFish(chooseRandomFish());
         }
