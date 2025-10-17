@@ -24,14 +24,15 @@ public class GameScreen implements Screen {
     private boolean instructionsVisible;
     private InventoryManager inventoryManager;
 
-    Fish walnut = new Fish("Walnut",5f,1f,10,3f,5f,"fish/walnut.png");
-    Fish narwhal = new Fish("Narwhal", 15f,3f,20, 200.5f, 3f, "fish/narwhal.png");
+    Fish walnut = new Fish("Walnut",5f,1f,10,3f,7f,"fish/walnut.png");
+    Fish narwhal = new Fish("Narwhal", 15f,2f,20, 200.5f, 3f, "fish/narwhal.png");
     Fish plague = new Fish("Plague", 2f, 1f, 40, 0f, 2f, "fish/plague.png");
-    Fish cod = new Fish("Cod",3.5f,1.5f,8,15f,4f,"fish/placeholder.png");
-    Fish bass = new Fish("Bass",6f,2f,15,30f,3f,"fish/placeholder.png");
-    Fish megaladon = new Fish("Megaladon",20f,2f,35,1200f,0.1f,"fish/placeholder.png");
+    Fish cod = new Fish("Cod",3.5f,1.5f,8,15f,5f,"fish/placeholder.png");
+    Fish bass = new Fish("Bass",8f,1.2f,15,30f,3f,"fish/placeholder.png");
+    Fish megaladon = new Fish("Megaladon",20f,1.8f,35,1200f,0.5f,"fish/placeholder.png");
+    Fish swordfish = new Fish("Swordfish",12f,0.6f,35,1200f,3f,"fish/placeholder.png");
 
-    private Fish[] allFish = {walnut, narwhal, plague,cod,bass,megaladon};
+    private Fish[] allFish = {walnut, narwhal, plague,cod,bass,megaladon,swordfish};
     private double totalWeight = 0.0;
     private ArrayList<Double> cumulativeWeights = new ArrayList<Double>();
 
