@@ -132,7 +132,7 @@ public class GameScreen implements Screen {
                 //fisher = Texture("boatman2.png");  /*May die due to privacy */
                 fishHooked = false;
                 Fish hookedFish = chooseRandomFish();
-                infoText = "You caught a "+hookedFish.getType()+"!";
+                infoText = "You hooked a "+hookedFish.getType()+"!";
                 //System.out.println("You caught a "+hookedFish.getType()+"!");
                 game.arrowHandler.beginArrowSequence(hookedFish);
             } else if (reelTimer < 0) {
