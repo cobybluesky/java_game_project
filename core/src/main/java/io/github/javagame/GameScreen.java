@@ -6,12 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 //https://alohaeee.itch.io/fishing-assets for the fishin lady
 
@@ -23,12 +20,7 @@ public class GameScreen implements Screen {
     private Texture exclamationPoint;
     private boolean fishingDisabled;
     private boolean instructionsVisible;
-    // fish inventory is now a variable in game (game.fishInventory), since it should persist between screens
-    //public ArrayList<Fish> fishInventory;
     private InventoryManager inventoryManager;
-
-    //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
-    //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
 
     Fish walnut = new Fish("Walnut",5f,1f,10,3f,5f,"fish/walnut.png");
     Fish narwhal = new Fish("Narwhal", 15f,3f,20, 200.5f, 3f, "fish/narwhal.png");
@@ -84,6 +76,7 @@ public class GameScreen implements Screen {
         //game.batch.draw(gameBg, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 
         //maybe handle this logic elsewhere???if we have time for refactoring
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !fishingDisabled) {
             System.out.println("Fish time");
             // start timer
@@ -107,23 +100,10 @@ public class GameScreen implements Screen {
         }
 
         //detects if person clicks fast enough
-        for (int i = game.arrowHandler.getArrowArray().size()-1; i>=0; i--) {
-
-                if (game.arrowHandler.getArrowArray().get(i).getY() > game.viewport.getWorldHeight()-5 && (game.arrowHandler.getArrowArray().get(i).getY() < game.viewport.getWorldHeight()+1)) {
-
-                    for(int n = 0; n<=3; n++) {
-                        //iterates through all possible keys the player pressed, and if they match up with the arrows column
-                        if (Gdx.input.isKeyJustPressed(game.arrowHandler.getKeys()[n]) && game.arrowHandler.getArrowArray().get(i).getX() == game.arrowHandler.getColumns()[n] ){
-                            game.arrowHandler.getArrowArray().remove(game.arrowHandler.getArrowArray().get(i));
-
-
-                        }
-                        else {
-                                System.out.println("NBOOOO");
-                            }
-                         }
-                    }
-                }
+        // MOVED THE SCORE DETECTION TO ARROWHANDLER
+        // IT IS STILL THERE
+        // JUST MOVED
+        // ALSO I'M USING INPUTPROCESSOR NOW.
         if (fishHooked) {
             //System.out.println("this is running");
             timeFrame -= delta; //copying what caleb pulled earlier lol
@@ -133,15 +113,19 @@ public class GameScreen implements Screen {
                 fishHooked = false;
                 Fish hookedFish = chooseRandomFish();
                 System.out.println("You caught a "+hookedFish.getType()+"!");
-                game.arrowHandler.beginArrowSequence(hookedFish.getArrowSpeed(), hookedFish.getArrowDelay(), hookedFish.getSequenceLen());
-                // once the sequence is finished, the player will get the fish or not depending on score
-                fishingDisabled = false;// this will need to be moved/changed eventually (once sequence ends)
-
+                game.arrowHandler.beginArrowSequence(hookedFish);
             } else if (timeFrame < 0) {
                 System.out.println("U suck and didn't get it lol");
                 fishHooked = false;
                 fishingDisabled = false;
             }
+        }
+        if (game.arrowHandler.isPendingResult()) {
+            if (game.arrowHandler.getsFish()) {
+                inventoryManager.addFish(game.arrowHandler.getPendingFish());
+            }
+            game.arrowHandler.endArrowSequence();
+            fishingDisabled = false;
         }
         // RENDER INVENTORY TEXT, HOPEFULLY
         game.batch.setProjectionMatrix(game.uiViewport.getCamera().combined);
@@ -150,10 +134,6 @@ public class GameScreen implements Screen {
         font.draw(game.batch, "Inventory", Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()-30);
         font.draw(game.batch, inventoryManager.getInventoryString(), Gdx.graphics.getWidth()-130, Gdx.graphics.getHeight()-70);
         game.batch.end();
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            inventoryManager.addFish(chooseRandomFish());
-        }
     }
 
     public Fish chooseRandomFish() {

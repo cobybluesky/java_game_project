@@ -1,9 +1,6 @@
 package io.github.javagame;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -20,13 +17,14 @@ public class FishinGame extends Game {
     public SpriteBatch batch;
     public FitViewport viewport;
     public ArrowHandler arrowHandler;
-    public InventoryManager inventoryManager;
+    //public InventoryManager inventoryManager;
     public ArrayList<Fish> fishInventory;
     private Texture image;
     private Texture fishingRod;
     private OrthographicCamera gameCamera;
     private OrthographicCamera uiCamera;
     public FitViewport uiViewport;
+    public int currentKey;
 
     @Override
     public void create() {
@@ -40,6 +38,18 @@ public class FishinGame extends Game {
         uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         image = new Texture("fishfishfishfish.jpeg");
         //fishingRod = new Texture("fishingrod.png");
+        Gdx.input.setInputProcessor(new InputAdapter() {
+            @Override
+            public boolean keyDown(int keycode) {
+                currentKey = keycode;
+                return true;
+            }
+            public boolean keyUp(int keycode) {
+                currentKey = -1;// no one cares
+                return true;
+            }
+        });
+
         this.setScreen(new MainMenuScreen(this));
 
     }
