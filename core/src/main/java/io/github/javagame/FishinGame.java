@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,6 +20,7 @@ public class FishinGame extends Game {
     public SpriteBatch batch;
     public FitViewport viewport;
     public ArrowHandler arrowHandler;
+    public InventoryManager inventoryManager;
     public ArrayList<Fish> fishInventory;
     private Texture image;
     private Texture fishingRod;
@@ -38,8 +40,8 @@ public class FishinGame extends Game {
         uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         image = new Texture("fishfishfishfish.jpeg");
         //fishingRod = new Texture("fishingrod.png");
-
         this.setScreen(new MainMenuScreen(this));
+
     }
 
     @Override

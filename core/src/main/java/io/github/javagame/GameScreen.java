@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
-
 import java.util.ArrayList;
 
 //https://alohaeee.itch.io/fishing-assets for the fishin lady
@@ -29,7 +28,9 @@ public class GameScreen implements Screen {
     //may change this to a dictionary(I forget what the java term is called for it) later so I can manually input
     //the fish and their chances of being caught. For now we should just stick with an equally random chance.`
 
-    Fish walnut = new Fish("Walnut",5f,1f,10f,30.2f,4f,"fish/walnut.png");
+    Fish walnut = new Fish("Walnut",5f,1f,10f,3f,4f,"fish/walnut.png");
+    Fish narwhal = new Fish("Narwhal", 15f,3f,20f, 200.5f, 5f, "fish/narwhal.png");
+    Fish plague = new Fish("Plague", 2f, 1f, 40f, 0f, 10f, "fish/plague.png");
 
     double fishDelay = -100;
     boolean isCast = false;
@@ -41,7 +42,7 @@ public class GameScreen implements Screen {
     public GameScreen(final FishinGame game) {
         this.game = game;
         gameBg = new Texture("kiddiepool2.png");
-        fisher = new Texture("Fisher000.png");
+        fisher = new Texture("boatman.png");
         fishtext = new Texture("fishtext.png");
         exclamationPoint = new Texture("exclamation.png");
         instructionsVisible = true; //sets the variable, tho I'm not sure if it repeats over and over. Hope not.

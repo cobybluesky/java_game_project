@@ -8,17 +8,17 @@ public class Fish {
     private float sequenceLen;
     private float length;
     private Texture texture;
-    private float weight;
+    private float chanceweight;
 
     // using "this." is more clean and pretty imo
-    public Fish(String type, float arrowSpeed, float arrowDelay, float sequenceLen, float length, float weight, String texture) {
+    public Fish(String type, float arrowSpeed, float arrowDelay, float sequenceLen, float length, float chanceweight, String texture) {
         this.type = type;
         this.arrowSpeed = arrowSpeed;
         this.arrowDelay = arrowDelay;
         this.sequenceLen = sequenceLen;
         this.length = length;
         this.texture = new Texture(texture);// texture is the file path as a string
-        this.weight = weight;
+        this.chanceweight = chanceweight;
     }
 
     public Texture getTexture() {
@@ -44,8 +44,8 @@ public class Fish {
         return length;
     }
 
-    public float getWeight() {
-        return weight;
+    public float getChanceWeight() {
+        return chanceweight;
     }
 
 
